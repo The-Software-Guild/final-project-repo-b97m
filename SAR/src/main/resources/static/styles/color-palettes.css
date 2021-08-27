@@ -1,0 +1,10 @@
+:root {
+    --monochrome-1: hsl(0, 0%, 1%);
+    --monochrome-2: hsl(0, 0%, 2%);
+    --monochrome-3: hsl(0, 0%, 4%);
+    --monochrome-4: hsl(0, 0%, 8%);
+    --monochrome-5: hsl(0, 0%, 16%);
+    --monochrome-6: hsl(0, 0%, 32%);
+    --monochrome-7: hsl(0, 0%, 64%);
+    --monochrome-8: hsl(0, 0%, 100%);
+}

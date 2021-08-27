@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http:ww/www.w3.org/1999/xhtml" lang="en">
+    <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SAR | Home</title>
+
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Basic&family=Montserrat&display=swap" rel="stylesheet"
+
+	<!-- Custom Styling -->
+	<link th:href="@{/styles/reset.css}" rel="stylesheet">
+	<link th:href="@{/styles/color-palettes.css}" rel="stylesheet">
+	<link th:href="@{/styles/index.css}" rel="stylesheet">
+
+	<!-- Custom Scripts -->
+	<script th:src="@{/scripts/index.js}"></script> 
+
+    </head>
+    <body>
+	<header>
+	    <nav>
+		<a href="#">Home</a>
+		<a href="./search">Search</a>
+		<a href="./read">Read</a>
+	    </nav>
+	</header>
+	<main>
+	    <h1>SAR</h1>
+	    <p>Welcome! Feel free to use this site to search and read news articles.</p>
+	</main>
+	<canvas></canvas>
+    </body>
+</html>

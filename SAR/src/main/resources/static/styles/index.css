@@ -1,0 +1,23 @@
+h1 {
+    font-size: 4em;
+    display: inline;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 1fr 4fr 1fr;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+canvas {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}

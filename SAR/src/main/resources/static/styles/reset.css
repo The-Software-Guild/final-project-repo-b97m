@@ -1,0 +1,85 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    padding: 2em;
+    text-align: center;
+    background-color: var(--monochrome-4);
+    color: var(--monochrome-7);
+}
+
+h1, h2, h3, h4, h5, h6, a {
+    font-family: "Gentium Book Basic", serif;
+}
+
+p, input, textarea, button, select {
+    font-family: "Montserrat", sans-serif;
+}
+
+input, textarea, button, select {
+    font-size: 1em;
+}
+
+nav {
+    /* border: 1px solid var(--monochrome-4); */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+}
+
+nav a {
+    width: 100%;
+    height: 100%;
+    padding: 1em 0;
+}
+
+a, input, textarea, button, select {
+    transition: all 1s cubic-bezier(0.16, 0.91, 0.19, 1.01);
+}
+
+input, textarea, button, select {
+    background-color: var(--monochrome-5);
+    color: var(--monochrome-7);
+    border: none;
+    outline: none;
+    padding: 0.4em;
+}
+
+a {
+    color: var(--monochrome-8);
+    text-decoration: none;
+}
+
+       a:hover,        a:focus,
+   input:hover,    input:focus,
+textarea:hover, textarea:focus,
+  button:hover,   button:focus,
+  select:hover,   select:focus {
+    background-color: var(--monochrome-6);
+    font-size: 1.2em;
+}
+
+main {
+    z-index: 1;
+}
+
+canvas {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+header {
+    z-index: 2;
+}
