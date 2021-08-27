@@ -19,6 +19,12 @@
     </parent>
 
     <dependencies>
+	<!-- Spring WebClient -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-webflux</artifactId>
+	</dependency>
+
 	<!-- Thymeleaf -->
 	<dependency>
 	    <groupId>org.springframework.boot</groupId>

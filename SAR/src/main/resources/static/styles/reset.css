@@ -67,6 +67,13 @@ textarea:hover, textarea:focus,
     font-size: 1.2em;
 }
 
+button[disabled],
+button[disabled]:hover, button[disabled]:focus {
+    font-size: 1em;
+    background-color: var(--monochrome-4);
+    color: var(--monochrome-4);
+}
+
 main {
     z-index: 1;
 }
