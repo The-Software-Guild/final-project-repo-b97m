@@ -7,4 +7,6 @@
     --monochrome-6: hsl(213, 10%, 32%);
     --monochrome-7: hsl(213, 10%, 64%);
     --monochrome-8: hsl(213, 10%, 100%);
+
+    --error-color: hsl(0, 100%, 60%);
 }

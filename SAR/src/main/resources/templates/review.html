@@ -3,7 +3,7 @@
     <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>SAR | Home</title>
+	<title>SAR | Review</title>
 
 	<!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,23 +13,28 @@
 	<!-- Custom Styling -->
 	<link th:href="@{/styles/reset.css}" rel="stylesheet">
 	<link th:href="@{/styles/color-palettes.css}" rel="stylesheet">
-	<link th:href="@{/styles/index.css}" rel="stylesheet">
+	<link th:href="@{/styles/review.css}" rel="stylesheet">
+
+	<!-- jQuery 3.6.0 via CDN -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 	<!-- Custom Scripts -->
-	<script th:src="@{/scripts/index.js}"></script> 
+	<script th:src="@{/scripts/review.js}"></script> 
 
     </head>
     <body>
 	<header>
 	    <nav>
-		<a href="#">Home</a>
+		<a href="./home">Home</a>
 		<a href="./search">Search</a>
-		<a href="./review">Review</a>
+		<a href="./#">Review</a>
 	    </nav>
 	</header>
 	<main>
-	    <h1>SAR</h1>
-	    <p>Welcome! Feel free to use this site to search, read, and review news articles.</p>
+	    <div id="saved-articles">
+	    </div>
+	    <div id="article-reviews">
+	    </div>
 	</main>
 	<canvas></canvas>
     </body>

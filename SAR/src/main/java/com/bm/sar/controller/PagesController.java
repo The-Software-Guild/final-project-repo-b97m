@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * The controller of this application 
+ * Serves the template pages 
  *
  * @author Benjamin Munoz
  * email: driver396@gmail.com
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("sar")
-public class PrimaryController {
+public class PagesController {
     @GetMapping("home")
     public String home() {
     	return "index";
@@ -22,5 +22,10 @@ public class PrimaryController {
     @GetMapping("search")
     public String search() {
 	return "search";
+    }
+
+    @GetMapping("review")
+    public String review() {
+	return "review";
     }
 }
