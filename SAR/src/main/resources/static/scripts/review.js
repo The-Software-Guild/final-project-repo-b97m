@@ -25,6 +25,7 @@ window.addEventListener("load", () => {
 		articleReviewsCreationTextarea.value = "";
 		articleReviewsCreationErrors.innerText = "";
 		reloadReviewsFor(subjectArticle)();
+		MathJax.typeset();
 	    })
 	    .catch(err => {
 		console.log(err);
@@ -53,6 +54,7 @@ window.addEventListener("load", () => {
 		reloadReviewsFor(subjectArticle)();
 		$(articleReviewsEditForm).hide();
 		$(articleReviewsCreationForm).show();
+		MathJax.typeset();
 	    }).catch(err => {
 		console.log(err);
 		articleReviewsEditErrors.innerText = `
@@ -181,6 +183,7 @@ window.addEventListener("load", () => {
 
 		    articleReviewsList.appendChild(reviewItem); 
 		});
+		MathJax.typeset();
 	    }).catch(err => console.log(err));
 	};
     }
