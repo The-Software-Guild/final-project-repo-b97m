@@ -1,11 +1,11 @@
 window.addEventListener("load", () => {
     function animate() {
-	brush.fillStyle = "hsl(0, 0%, 8%)";
+	brush.fillStyle = "hsl(213, 20%, 8%)";
 	brush.fillRect(0, 0, canv.width, canv.height);
-	brush.fillStyle = "hsla(0, 0%, 8%, 0%)";
+	brush.fillStyle = "hsla(213, 20%, 8%, 0%)";
 	brush.fillRect(0, 0, canv.width, canv.height);
 
-	brush.strokeStyle = "hsl(0, 0%, 64%)";
+	brush.strokeStyle = "hsl(213, 20%, 64%)";
 	for (let i = 0; i < possX.length; i++) {
 	    let dx = possX[i] - centX;
 	    let dy = possY[i] - centY;

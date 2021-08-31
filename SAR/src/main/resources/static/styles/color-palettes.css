@@ -1,12 +1,12 @@
 :root {
-    --monochrome-1: hsl(213, 10%, 1%);
-    --monochrome-2: hsl(213, 10%, 2%);
-    --monochrome-3: hsl(213, 10%, 4%);
-    --monochrome-4: hsl(213, 10%, 8%);
-    --monochrome-5: hsl(213, 10%, 16%);
-    --monochrome-6: hsl(213, 10%, 32%);
-    --monochrome-7: hsl(213, 10%, 64%);
-    --monochrome-8: hsl(213, 10%, 100%);
+    --monochrome-1: hsl(213, 20%, 1%);
+    --monochrome-2: hsl(213, 20%, 2%);
+    --monochrome-3: hsl(213, 20%, 4%);
+    --monochrome-4: hsl(213, 20%, 8%);
+    --monochrome-5: hsl(213, 20%, 16%);
+    --monochrome-6: hsl(213, 20%, 32%);
+    --monochrome-7: hsl(213, 20%, 64%);
+    --monochrome-8: hsl(213, 20%, 100%);
 
     --error-color: hsl(0, 100%, 60%);
 }
