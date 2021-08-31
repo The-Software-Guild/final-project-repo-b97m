@@ -58,4 +58,12 @@ public interface ArticleDao {
      * @return The above value
      */
     public boolean deleteArticle(int articleId); 
+
+    /**
+     * Attempts to delete all articles
+     * Returns true if successful, otherwise false.
+     * 
+     * @return The above value
+     */
+    public boolean deleteArticles();
 }

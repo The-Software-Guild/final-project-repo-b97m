@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,22 +64,36 @@ public class ReqDaoMySqlDb implements ReqDao {
 
     @Override
     public boolean removeRequestsBeforeTime(LocalDateTime time) {
-	int rowsUpdated;
+	boolean success;
 	try {
-	    rowsUpdated = jdbc.update(
+	    jdbc.update(
 		"DELETE FROM request WHERE requestTime < ?",
 		Timestamp.valueOf(time)
 	    );
+	    success = true;
 	} catch (DataAccessException ex) {
 	    System.out.println(ex.getMessage());
-	    rowsUpdated = 0;   
+	    success = false;
 	}
-	return rowsUpdated > 0;
+	return success;
+    }
+
+    @Override
+    public boolean removeAllRequests() {
+	boolean success;
+	try {
+	    jdbc.update("DELETE FROM request");
+	    success = true;
+	} catch (DataAccessException ex) {
+	    System.out.println(ex.getMessage());
+	    success = false;
+	}
+	return success;
     }
 
     @Override
     public List<Req> getRequests() {
-	return jdbc.query(
+	var retrVal = jdbc.query(
 	    "SELECT * FROM request",
 	    (ResultSet rs, int index) -> {
 		Req req = new Req();
@@ -88,6 +103,10 @@ public class ReqDaoMySqlDb implements ReqDao {
 		return req;
 	    }
 	);
+	if (retrVal == null) {
+	    return new LinkedList<>();
+	}
+	return retrVal;
     }
 
     @Override

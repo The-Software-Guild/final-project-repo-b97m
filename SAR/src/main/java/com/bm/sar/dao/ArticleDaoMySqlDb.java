@@ -3,9 +3,11 @@ package com.bm.sar.dao;
 import com.bm.sar.dto.Article;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +37,10 @@ public class ArticleDaoMySqlDb implements ArticleDao {
 	article.setTitle(rs.getString(             "articleTitle"));
 	article.setSourceName(rs.getString(        "articleSource"));
 	article.setUrl(rs.getString(               "articleUrl"));
-	article.setPublicationTime(rs.getTimestamp("articlePublicationTime").toLocalDateTime());
-	article.setSavingTime(rs.getTimestamp(     "articleSavingTime").toLocalDateTime());
 
+	var time = rs.getTimestamp("articlePublicationTime");
+	article.setPublicationTime((time == null) ? null : time.toLocalDateTime());
+	article.setSavingTime(rs.getTimestamp(     "articleSavingTime").toLocalDateTime());
 	return article;
     };
     
@@ -48,7 +51,11 @@ public class ArticleDaoMySqlDb implements ArticleDao {
     
     @Override
     public List<Article> getArticles() {
-	return JDBC.query("SELECT * FROM article", ARTICLE_MAPPER);
+	var retrVal = JDBC.query("SELECT * FROM article", ARTICLE_MAPPER);
+	if (retrVal == null) {
+	    return new LinkedList<>();
+	}
+	return retrVal;
     }
 
     @Override
@@ -91,7 +98,11 @@ public class ArticleDaoMySqlDb implements ArticleDao {
 		    stmt.setString(2, sourceName);
 		    stmt.setString(3, title);
 		    stmt.setString(4, url);
-		    stmt.setTimestamp(5, Timestamp.valueOf(publicationTime));
+		    if (publicationTime != null) {
+			stmt.setTimestamp(5, Timestamp.valueOf(publicationTime));
+		    } else {
+			stmt.setTimestamp(5, null);
+		    }
 		    return stmt;
 		}, 
 		keyHolder
@@ -117,20 +128,34 @@ public class ArticleDaoMySqlDb implements ArticleDao {
 
     @Override
     public boolean deleteArticle(int articleId) {
-	int rowsUpdated;
+	boolean success;
 	try {
-	    rowsUpdated = JDBC.update(
+	    JDBC.update(
 		"DELETE FROM review WHERE articleId = ?",
 		articleId
 	    );
-	    rowsUpdated += JDBC.update(
+	    JDBC.update(
 		"DELETE FROM article WHERE articleId = ?", 
 		articleId
 	    );
+	    success = true;
 	} catch (DataAccessException ex) {
 	    System.out.println(ex.getMessage());
-	    rowsUpdated = 0;
+	    success = false;
 	}
-	return rowsUpdated > 0;
+	return success;
     }
+
+    @Override
+    public boolean deleteArticles() {
+   	boolean success;
+	try {
+	    JDBC.update("DELETE FROM article");
+	    success = true;
+	} catch (DataAccessException ex) {
+	    System.out.println(ex.getMessage());
+	    success = false;
+	}
+	return success;
+    }    
 }

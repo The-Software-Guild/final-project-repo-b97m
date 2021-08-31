@@ -33,6 +33,13 @@ public interface ReqDao {
     public boolean removeRequestsBeforeTime(LocalDateTime time);
 
     /**
+     * Removes all requests. If the removal is successful, true is
+     * returned. False is returned otherwise.
+     * @return The above value
+     */
+    public boolean removeAllRequests();
+
+    /**
      * Returns a list of all requests
      * 
      * @return The above list

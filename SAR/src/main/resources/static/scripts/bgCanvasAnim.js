@@ -18,8 +18,8 @@ window.addEventListener("load", () => {
 	    brush.arc(possX[i], possY[i], Math.sqrt(dist), 0, 2 * Math.PI);
 	    brush.stroke();
 	    if (2 * Math.abs(dx) > canv.width || 2 * Math.abs(dy) > canv.height) {
-		let rad = 100 + (Math.random() * 50);
-		let ang = Math.random() * Math.PI;
+		let rad = 100 + (Math.random() * 100);
+		let ang = (Math.random() * 3 * Math.PI / 2) - (Math.PI / 4);
 		possX[i] = centX + rad * Math.cos(ang);
 		possY[i] = centY + rad * Math.sin(ang);
 	    }
@@ -41,7 +41,7 @@ window.addEventListener("load", () => {
     });
 
     const speed = 3;
-    const bubbles = 30;
+    const bubbles = 60;
 
     let canv, brush;
     let possX = [];
@@ -56,8 +56,8 @@ window.addEventListener("load", () => {
     brush = canv.getContext("2d");
 
     for (let i = 0; i < bubbles; i++) {
-	let rad = 100 + (Math.random() * 50);
-	let ang = Math.random() * Math.PI;
+	let rad = 100 + (Math.random() * 100);
+	let ang = (Math.random() * 3 * Math.PI / 2) - (Math.PI / 4);
 	possX[i] = centX + rad * Math.cos(ang);
 	possY[i] = centY + rad * Math.sin(ang);
     }
