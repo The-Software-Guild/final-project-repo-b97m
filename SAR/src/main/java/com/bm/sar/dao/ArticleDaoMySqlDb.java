@@ -150,6 +150,7 @@ public class ArticleDaoMySqlDb implements ArticleDao {
     public boolean deleteArticles() {
    	boolean success;
 	try {
+	    JDBC.update("DELETE FROM review");
 	    JDBC.update("DELETE FROM article");
 	    success = true;
 	} catch (DataAccessException ex) {

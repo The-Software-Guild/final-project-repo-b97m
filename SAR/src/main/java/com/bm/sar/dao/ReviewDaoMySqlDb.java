@@ -121,16 +121,30 @@ public class ReviewDaoMySqlDb implements ReviewDao {
 
     @Override
     public boolean deleteReview(int reviewId) {
-	int rowsUpdated;
+	boolean success;
 	try {
-	    rowsUpdated = JDBC.update(
+	    JDBC.update(
 		"DELETE FROM review WHERE reviewId = ?", 
 		reviewId
 	    );
+	    success = true;
 	} catch (DataAccessException ex) {
 	    System.out.println(ex.getMessage());
-	    rowsUpdated = 0;
+	    success = false;
 	}
-	return rowsUpdated > 0;
+	return success;
+    }
+
+    @Override
+    public boolean deleteReviews() {
+    	boolean success;
+	try {
+	    JDBC.update("DELETE FROM review");
+	    success = true;
+	} catch (DataAccessException ex) {
+	    System.out.println(ex.getMessage());
+	    success = false;
+	}
+	return success;
     }
 }

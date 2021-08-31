@@ -65,4 +65,11 @@ public interface ReviewDao {
      * @return The above value
      */
     public boolean deleteReview(int reviewId);
+
+    /**
+     * Attempts to delete all reviews. True if successful, false otherwise
+     * 
+     * @return The above value
+     */
+    public boolean deleteReviews();
 }

@@ -74,4 +74,11 @@ public class Service {
     public boolean deleteReview(int reviewId) {
 	return reviewDao.deleteReview(reviewId);
     }
+
+    public boolean clearData() {
+	var artDeld = articleDao.deleteArticles();
+	var revDeld = reviewDao.deleteReviews();
+	var reqDeld = reqDao.removeAllRequests();
+	return artDeld && revDeld && reqDeld;
+    }
 }
