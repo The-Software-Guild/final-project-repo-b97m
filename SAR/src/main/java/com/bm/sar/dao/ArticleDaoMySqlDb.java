@@ -120,7 +120,11 @@ public class ArticleDaoMySqlDb implements ArticleDao {
 	int rowsUpdated;
 	try {
 	    rowsUpdated = JDBC.update(
-		"DELETE FROM article WHERE id = ?", 
+		"DELETE FROM review WHERE articleId = ?",
+		articleId
+	    );
+	    rowsUpdated += JDBC.update(
+		"DELETE FROM article WHERE articleId = ?", 
 		articleId
 	    );
 	} catch (DataAccessException ex) {

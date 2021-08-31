@@ -10,7 +10,6 @@ html, body {
 }
 
 body {
-    padding: 2em;
     text-align: center;
     background-color: var(--monochrome-4);
     color: var(--monochrome-7);
@@ -43,6 +42,7 @@ nav a {
 
 a, input, textarea, button, select {
     transition: all 1s cubic-bezier(0.16, 0.91, 0.19, 1.01);
+    border: 0 solid var(--monochrome-4);
 }
 
 input, textarea, button, select {
@@ -65,6 +65,8 @@ textarea:hover, textarea:focus,
   select:hover,   select:focus {
     background-color: var(--monochrome-6);
     font-size: 1.2em;
+    border: 1px solid var(--monochrome-8);
+    outline: 1px solid var(--monochrome-8);
 }
 
 button[disabled],
@@ -94,4 +96,19 @@ header {
 a {
     font-size: 1.2em;
     font-weight: bold;
+}
+
+hr {
+    background-color: white;
+    height: 1px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+textarea {
+    resize: none;
+}
+
+.hidden {
+    display: none;
 }

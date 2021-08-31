@@ -5,6 +5,7 @@ import com.bm.sar.dao.ReqDao;
 import com.bm.sar.dao.ReviewDao;
 import com.bm.sar.dto.Article;
 import com.bm.sar.dto.Req;
+import com.bm.sar.dto.Review;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -52,5 +53,25 @@ public class Service {
 
     public List<Article> getSavedArticles() {
 	return articleDao.getArticles();
+    }
+
+    public boolean deleteArticle(int articleId) {
+	return articleDao.deleteArticle(articleId);
+    }
+
+    public List<Review> getReviewsByArticleId(int articleId) {
+	return reviewDao.getReviewsByArticleId(articleId);
+    }
+
+    public Optional<Review> makeReview(String text, int articleId) {
+	return reviewDao.createReview(text, articleId);
+    }
+
+    public boolean updateReview(int reviewId, String text) {
+	return reviewDao.updateReview(reviewId, text);
+    }
+
+    public boolean deleteReview(int reviewId) {
+	return reviewDao.deleteReview(reviewId);
     }
 }

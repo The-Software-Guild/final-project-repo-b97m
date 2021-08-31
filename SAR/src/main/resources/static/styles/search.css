@@ -52,10 +52,12 @@ body {
     grid-template-rows: 1fr 1fr 2em;
     grid-template-columns: 1fr 1fr;
     background-color: var(--monochrome-4);
-    column-gap: 1em;
+    column-gap: 0.5em;
+    row-gap: 0.5em;
 }
 
 #search-results > div h2, #search-results > div h3 {
+    overflow: auto;
     grid-column: 1 / 3;
 } 
 

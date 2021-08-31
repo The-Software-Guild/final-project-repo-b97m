@@ -19,6 +19,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 	<!-- Custom Scripts -->
+	<script th:src="@{/scripts/bgCanvasAnim.js}"></script> 
 	<script th:src="@{/scripts/review.js}"></script> 
 
     </head>
@@ -27,13 +28,28 @@
 	    <nav>
 		<a href="./home">Home</a>
 		<a href="./search">Search</a>
-		<a href="./#">Review</a>
+		<a href="#">Review</a>
 	    </nav>
 	</header>
 	<main>
 	    <div id="saved-articles">
 	    </div>
-	    <div id="article-reviews">
+	    <hr />
+	    <div id="delete-confirm">
+	    </div>
+	    <div>
+		<h2 id="article-reviews-header"></h2>
+		<form id="article-reviews-creation-form">
+		    <textarea name="text"></textarea>
+		    <button type="submit">Add Review</button>
+		</form>
+		<form id="article-reviews-edit-form">
+		    <textarea name="text"></textarea>
+		    <button type="submit">Update Review</button>
+		    <button>Cancel</button>
+		</form>
+		<div id="article-reviews-list">
+		</div>
 	    </div>
 	</main>
 	<canvas></canvas>

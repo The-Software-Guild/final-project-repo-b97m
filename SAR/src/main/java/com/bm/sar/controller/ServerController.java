@@ -2,11 +2,15 @@ package com.bm.sar.controller;
 
 import com.bm.sar.dto.Article;
 import com.bm.sar.dto.Req;
+import com.bm.sar.dto.Review;
 import com.bm.sar.service.Service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,5 +70,35 @@ public class ServerController {
 	} else {
 	    return null;
 	}
+    }
+
+    @DeleteMapping("article")
+    public boolean deleteArticle(@RequestBody Article art) {
+	return SERVICE.deleteArticle(art.getId());
+    }
+
+    @GetMapping("review/article/{articleId}")
+    public List<Review> getReviewsByArticle(@PathVariable int articleId) {
+	return SERVICE.getReviewsByArticleId(articleId);
+    }
+
+    @PostMapping("review")
+    public Review makeReview(@RequestBody Review rev) {
+    	var possReview = SERVICE.makeReview(rev.getText(), rev.getArticleId());
+	if (possReview.isPresent()) {
+	    return possReview.get();
+	} else {
+	    return null;
+	}
+    }
+
+    @PutMapping("review")
+    public boolean updateReview(@RequestBody Review rev) {
+    	return SERVICE.updateReview(rev.getId(), rev.getText());
+    }
+
+    @DeleteMapping("review")
+    public boolean deleteReview(@RequestBody Review rev) {
+	return SERVICE.deleteReview(rev.getId());
     }
 }
