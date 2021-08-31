@@ -19,10 +19,9 @@ public interface ReqDao {
      * is returned. Otherwise, an empty instance is returned.
      * 
      * @param text
-     * @param time
      * @return The above instance
      */
-    public Optional<Req> makeRequest(String text, LocalDateTime time);
+    public Optional<Req> makeRequest(String text);
 
     /**
      * Removes all requests that are older than 24 hours. If
@@ -39,4 +38,14 @@ public interface ReqDao {
      * @return The above list
      */
     public List<Req> getRequests();
+
+    /**
+     * Attempts to retrieve the request corresponding to this id
+     * If successful, an instance containing the matching request is
+     * returned. Otherwise, an empty instance is returned.
+     * 
+     * @param requestId
+     * @return The above instance
+     */
+    public Optional<Req> getRequestById(int requestId);
 }

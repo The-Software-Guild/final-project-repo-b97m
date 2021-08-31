@@ -13,6 +13,7 @@ window.addEventListener("load", () => {
     let articleReviewsCreationForm = document.querySelector("#article-reviews-creation-form");
     let articleReviewsCreationTextarea = articleReviewsCreationForm.children[0];
     let articleReviewsCreationSubmit = articleReviewsCreationForm.children[1];
+    let articleReviewsCreationErrors = articleReviewsCreationForm.children[2];
     articleReviewsCreationSubmit.addEventListener("click", evt => {
 	evt.preventDefault();
 	if (subjectArticle !== null) {
@@ -22,9 +23,16 @@ window.addEventListener("load", () => {
 	    })
 	    .then(res => {
 		articleReviewsCreationTextarea.value = "";
+		articleReviewsCreationErrors.innerText = "";
 		reloadReviewsFor(subjectArticle)();
 	    })
-	    .catch(err => console.log(err));
+	    .catch(err => {
+		console.log(err);
+		articleReviewsCreationErrors.innerText = `
+		    Either the review was too long,(${articleReviewsCreationTextarea.value.length}/1000 chars),
+		    or something went wrong with creating the review
+		`;
+	    });
 	}
     });
 
@@ -32,18 +40,26 @@ window.addEventListener("load", () => {
     let articleReviewsEditTextarea = articleReviewsEditForm.children[0];
     let articleReviewsEditSubmit = articleReviewsEditForm.children[1];
     let articleReviewsEditCancel = articleReviewsEditForm.children[2];
+    let articleReviewsEditErrors = articleReviewsEditForm.children[3];
     articleReviewsEditSubmit.addEventListener("click", evt => {
 	evt.preventDefault();
-	$(articleReviewsEditForm).hide();
-	$(articleReviewsCreationForm).show();
     	if (subjectArticle !== null && subjectReview !== null) {
 	    customAjaxPut("http://localhost:8080/sar-aux/review", {
 	    	text: articleReviewsEditTextarea.value,
 		id: subjectReview.id
 	    }).then(() => {
 		articleReviewsEditTextarea.value = "";
+		articleReviewsEditErrors.innerText = "";
 		reloadReviewsFor(subjectArticle)();
-	    }).catch(err => console.log(err));
+		$(articleReviewsEditForm).hide();
+		$(articleReviewsCreationForm).show();
+	    }).catch(err => {
+		console.log(err);
+		articleReviewsEditErrors.innerText = `
+		    Either the review was too long,(${articleReviewsEditTextarea.value.length}/1000 chars),
+		    or something went wrong with saving the edit
+		`;
+	    });
 	}
     });
     articleReviewsEditCancel.addEventListener("click", evt => {
@@ -174,7 +190,7 @@ window.addEventListener("load", () => {
 	    $(articleReviewsCreationForm).hide();
 	    $(articleReviewsEditForm).show();
 	    subjectReview = review;
-	    articleReviewsEditForm.children[1].value = review.text;
+	    articleReviewsEditTextarea.value = review.text;
 	};
     }
 

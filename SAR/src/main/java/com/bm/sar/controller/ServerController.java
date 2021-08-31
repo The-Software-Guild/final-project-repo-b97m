@@ -6,6 +6,8 @@ import com.bm.sar.dto.Review;
 import com.bm.sar.service.Service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,12 +44,12 @@ public class ServerController {
     }
 
     @PostMapping("request")
-    public Req makeRequest(@RequestBody Req req) {
+    public ResponseEntity makeRequest(@RequestBody Req req) {
 	var possReq = SERVICE.recordRequest(req.getText());
 	if (possReq.isPresent()) {
-	    return possReq.get();
+	    return new ResponseEntity(possReq.get(), HttpStatus.CREATED);
 	}
-	return null;
+	return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("article")
@@ -56,7 +58,7 @@ public class ServerController {
     }
 
     @PostMapping("article")
-    public Article saveArticle(@RequestBody Article art) {
+    public ResponseEntity saveArticle(@RequestBody Article art) {
 	var possArticle = SERVICE.recordArticle(
 	    art.getAuthor(), 
 	    art.getTitle(), 
@@ -66,15 +68,20 @@ public class ServerController {
 	);
 
 	if (possArticle.isPresent()) {
-	    return possArticle.get();
+	    return new ResponseEntity(possArticle.get(), HttpStatus.CREATED);
 	} else {
-	    return null;
+	    return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
 	}
     }
 
     @DeleteMapping("article")
-    public boolean deleteArticle(@RequestBody Article art) {
-	return SERVICE.deleteArticle(art.getId());
+    public ResponseEntity deleteArticle(@RequestBody Article art) {
+	boolean success = SERVICE.deleteArticle(art.getId());
+	if (success) {
+	    return new ResponseEntity(success, HttpStatus.OK);
+	}
+	return new ResponseEntity(success, HttpStatus.INTERNAL_SERVER_ERROR);
+	
     }
 
     @GetMapping("review/article/{articleId}")
@@ -83,22 +90,30 @@ public class ServerController {
     }
 
     @PostMapping("review")
-    public Review makeReview(@RequestBody Review rev) {
+    public ResponseEntity makeReview(@RequestBody Review rev) {
     	var possReview = SERVICE.makeReview(rev.getText(), rev.getArticleId());
 	if (possReview.isPresent()) {
-	    return possReview.get();
+	    return new ResponseEntity(possReview.get(), HttpStatus.CREATED);
 	} else {
-	    return null;
+	    return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
 	}
     }
 
     @PutMapping("review")
-    public boolean updateReview(@RequestBody Review rev) {
-    	return SERVICE.updateReview(rev.getId(), rev.getText());
+    public ResponseEntity updateReview(@RequestBody Review rev) {
+	boolean success = SERVICE.updateReview(rev.getId(), rev.getText());
+	if (success) {
+	    return new ResponseEntity(success, HttpStatus.OK);
+	}
+	return new ResponseEntity(success, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @DeleteMapping("review")
-    public boolean deleteReview(@RequestBody Review rev) {
-	return SERVICE.deleteReview(rev.getId());
+    public ResponseEntity deleteReview(@RequestBody Review rev) {
+	boolean success = SERVICE.deleteReview(rev.getId());
+	if (success) {
+	    return new ResponseEntity(success, HttpStatus.OK);
+	}
+	return new ResponseEntity(success, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

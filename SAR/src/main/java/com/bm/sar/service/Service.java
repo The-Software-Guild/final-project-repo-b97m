@@ -38,7 +38,7 @@ public class Service {
     }
 
     public Optional<Req> recordRequest(String requestStr) {
-	return reqDao.makeRequest(requestStr, LocalDateTime.now());
+	return reqDao.makeRequest(requestStr);
     }
 
     public Optional<Article> recordArticle(

@@ -103,15 +103,19 @@ window.addEventListener("load", () => {
 	console.log("querying: " + queryStr);
 	if (queryStr.length > 0 && !searchButton.hasAttribute("disabled")) {
 	    searchButton.setAttribute("disabled", "");
-
+	    searchResults.innerHTML = "";
 	    customAjaxPost(
 		"http://localhost:8080/sar-aux/request", 
 		{text: queryStr}
 	    ).then(res => { 
+		console.log("Calling counter");
 		console.log(res);
+		console.log("----------");
 		return customAjaxGet("http://localhost:8080/sar-aux/request");
 	    }).then(res => {
+		console.log("Calling NewsAPI");
 		console.log(res);
+		console.log("----------");
 		searchInput.value = "";
 		searchInput.setAttribute("placeholder", `${100 - res} request(s) remaining`);		
 	    	return customAjaxGet(`http://localhost:8080/sar-secrets/articles/${queryStr}`);
@@ -129,7 +133,13 @@ window.addEventListener("load", () => {
 		    () => searchButton.removeAttribute("disabled"), 
 		    500
 		);
-		$(searchErrors).append(`<p>${err}</p>`);
+		$(searchErrors).append(`
+		    <p>
+			Either the request was too long 
+			(${queryStr.length}/1000 chars), or something
+			went wrong with retrieving the news articles
+		    </p>
+		`);
 	    });
 	}
     }

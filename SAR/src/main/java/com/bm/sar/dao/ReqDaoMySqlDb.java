@@ -32,7 +32,7 @@ public class ReqDaoMySqlDb implements ReqDao {
     }
     
     @Override
-    public Optional<Req> makeRequest(String text, LocalDateTime time) {
+    public Optional<Req> makeRequest(String text) {
 	Optional<Req> receivedInstance;
 	int rowsUpdated;
 	var keyHolder = new GeneratedKeyHolder();
@@ -40,12 +40,11 @@ public class ReqDaoMySqlDb implements ReqDao {
 	    rowsUpdated = jdbc.update(
 		(Connection conn) -> {
 		    var stmt = conn.prepareStatement(
-			"INSERT INTO request (requestText, requestTime) "
-			+ "VALUES (?, ?)", 
+			"INSERT INTO request (requestText) "
+			+ "VALUES (?)", 
 			Statement.RETURN_GENERATED_KEYS
 		    );
 		    stmt.setString(1, text);
-		    stmt.setTimestamp(2, Timestamp.valueOf(time));
 		    return stmt;
 		}, 
 		keyHolder
@@ -55,11 +54,7 @@ public class ReqDaoMySqlDb implements ReqDao {
 	    rowsUpdated = 0;
 	}
 	if (rowsUpdated > 0) {
-	    Req req = new Req();
-	    req.setId(keyHolder.getKey().intValue());
-	    req.setText(text);
-	    req.setTime(time);
-	    receivedInstance = Optional.of(req);
+	    receivedInstance = getRequestById(keyHolder.getKey().intValue());
 	} else {
 	    receivedInstance = Optional.empty();
 	}
@@ -93,5 +88,27 @@ public class ReqDaoMySqlDb implements ReqDao {
 		return req;
 	    }
 	);
+    }
+
+    @Override
+    public Optional<Req> getRequestById(int requestId) {
+	Optional<Req> receivedInstance;
+	try {
+	    receivedInstance = Optional.of(jdbc.queryForObject(
+		"SELECT * FROM request where requestId = ?",
+		(ResultSet rs, int index) -> {
+		    Req req = new Req();
+		    req.setId(rs.getInt("requestId"));
+		    req.setText(rs.getString("requestText"));
+		    req.setTime(rs.getTimestamp("requestTime").toLocalDateTime());
+		    return req;
+		},
+		requestId
+	    ));
+	} catch (DataAccessException ex) {
+	    System.out.println(ex.getMessage());
+	    receivedInstance = Optional.empty();
+	}
+	return receivedInstance;
     }
 }

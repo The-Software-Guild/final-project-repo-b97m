@@ -72,3 +72,7 @@ form {
 main > div:nth-last-of-type(1) {
     margin-bottom: 2em;
 }
+
+#article-reviews-creation-errors, #article-reviews-edit-errors {
+    color: var(--error-color);
+}
