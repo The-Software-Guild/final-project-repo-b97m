@@ -180,6 +180,7 @@ window.addEventListener("load", () => {
 
 		    articleReviewsList.appendChild(reviewItem); 
 		});
+		articleReviewsHeader.scrollIntoView();
 	    }).catch(err => console.log(err));
 	};
     }
