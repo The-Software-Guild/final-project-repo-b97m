@@ -14,6 +14,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * An implementation of the ReqDao that interacts with a
@@ -33,6 +34,7 @@ public class ReqDaoMySqlDb implements ReqDao {
     }
     
     @Override
+    @Transactional
     public Optional<Req> makeRequest(String text) {
 	Optional<Req> receivedInstance;
 	int rowsUpdated;

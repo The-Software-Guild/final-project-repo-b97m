@@ -3,7 +3,6 @@ package com.bm.sar.dao;
 import com.bm.sar.dto.Article;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -16,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * An implementation of the ArticleDao
@@ -32,15 +32,16 @@ public class ArticleDaoMySqlDb implements ArticleDao {
 
     private static final RowMapper<Article> ARTICLE_MAPPER = (ResultSet rs, int index) -> {
 	var article = new Article();
-	article.setId(rs.getInt(                   "articleId"));
-	article.setAuthor(rs.getString(            "articleAuthor"));
-	article.setTitle(rs.getString(             "articleTitle"));
-	article.setSourceName(rs.getString(        "articleSource"));
-	article.setUrl(rs.getString(               "articleUrl"));
+	article.setId(rs.getInt(           "articleId"));
+	article.setAuthor(rs.getString(    "articleAuthor"));
+	article.setTitle(rs.getString(     "articleTitle"));
+	article.setSourceName(rs.getString("articleSource"));
+	article.setUrl(rs.getString(       "articleUrl"));
 
 	var time = rs.getTimestamp("articlePublicationTime");
 	article.setPublicationTime((time == null) ? null : time.toLocalDateTime());
-	article.setSavingTime(rs.getTimestamp(     "articleSavingTime").toLocalDateTime());
+
+	article.setSavingTime(rs.getTimestamp("articleSavingTime").toLocalDateTime());
 	return article;
     };
     
@@ -127,6 +128,7 @@ public class ArticleDaoMySqlDb implements ArticleDao {
     }
 
     @Override
+    @Transactional
     public boolean deleteArticle(int articleId) {
 	boolean success;
 	try {
@@ -147,6 +149,7 @@ public class ArticleDaoMySqlDb implements ArticleDao {
     }
 
     @Override
+    @Transactional
     public boolean deleteArticles() {
    	boolean success;
 	try {
