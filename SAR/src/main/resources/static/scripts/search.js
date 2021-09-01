@@ -164,88 +164,88 @@ window.addEventListener("load", () => {
     });
 });
 
-    function customAjaxGet(url) {
-	return new Promise((resolver, rejector) => {
-	    $.ajax(url).done(res => resolver(res)).fail(err => rejector(err));
-	});
-    }
+function customAjaxGet(url) {
+    return new Promise((resolver, rejector) => {
+	$.ajax(url).done(res => resolver(res)).fail(err => rejector(err));
+    });
+}
 
-    function customAjaxPost(url, data) {
-	return new Promise((resolver, rejector) => {
-	    $.ajax(
-		url, 
-		{
-		    method: "POST", 
-		    data: JSON.stringify(data), 
-		    contentType: "application/json; charset=utf-8"
-		}
-	    ).done(res => resolver(res))
-	    .fail(err => rejector(err));
-	});
-    }
-
-    function processResults(resultsText) {
-	let resultsJson = null;
-	try {
-	    resultsJson = JSON.parse(resultsText);
-	} catch (err) {
-	    console.log(err);
-	}
-	    
-	if (resultsJson !== null) {
-	    const { status, articles } = resultsJson;
-	    if (status === "ok") {
-		renderArticles(articles);
-	    } else {
-		$(searchErrors).append(`<p>Something went wrong while retrieving the search results</p>`);
+function customAjaxPost(url, data) {
+    return new Promise((resolver, rejector) => {
+	$.ajax(
+	    url, 
+	    {
+		method: "POST", 
+		data: JSON.stringify(data), 
+		contentType: "application/json; charset=utf-8"
 	    }
+	).done(res => resolver(res))
+	.fail(err => rejector(err));
+    });
+}
+
+function processResults(resultsText) {
+    let resultsJson = null;
+    try {
+	resultsJson = JSON.parse(resultsText);
+    } catch (err) {
+	console.log(err);
+    }
+	
+    if (resultsJson !== null) {
+	const { status, articles } = resultsJson;
+	if (status === "ok") {
+	    renderArticles(articles);
 	} else {
 	    $(searchErrors).append(`<p>Something went wrong while retrieving the search results</p>`);
 	}
+    } else {
+	$(searchErrors).append(`<p>Something went wrong while retrieving the search results</p>`);
     }
+}
 
-    function renderArticles(articles) {
-	searchResults.innerHTML = "";
-	articles.forEach(article => {
-	    let item = document.createElement("div");
-	    let itemTitle = document.createElement("h2");
-	    itemTitle.innerText = article.title;
+function renderArticles(articles) {
+    searchResults.innerHTML = "";
+    articles.forEach(article => {
+	let item = document.createElement("div");
+	let itemTitle = document.createElement("h2");
+	itemTitle.innerText = article.title;
 
-	    let itemAuthorSource = document.createElement("h3");
-	    itemAuthorSource.innerText = `${article.author} | ${article.source.name} | ${article.publishedAt} UTC`;
+	let itemAuthorSource = document.createElement("h3");
+	itemAuthorSource.innerText = `${article.author} | ${article.source.name} | ${article.publishedAt} UTC`;
 
-	    let itemReadLink = document.createElement("a");
-	    itemReadLink.setAttribute("href", `${article.url}`);
-	    itemReadLink.setAttribute("target", "_blank");
-	    itemReadLink.setAttribute("rel", "noopener noreferrer");
-	    itemReadLink.innerText = "Read";
+	let itemReadLink = document.createElement("a");
+	itemReadLink.setAttribute("href", `${article.url}`);
+	itemReadLink.setAttribute("target", "_blank");
+	itemReadLink.setAttribute("rel", "noopener noreferrer");
+	itemReadLink.innerText = "Read";
 
-	    let itemSaveButton = document.createElement("button");
-	    itemSaveButton.innerText = "Save";
-	    itemSaveButton.addEventListener("click", evt => {
-		customAjaxPost(
-		    "http://localhost:8080/sar-aux/article", 
-		    {
-			author: article.author,
-			title: article.title,
-			url: article.url,
-			publicationTime: article.publishedAt,
-			sourceName: article.source.name
-		    }
-		).then(res => {
-		    console.log(res);
-	    	    searchResults.removeChild(evt.target.parentElement);
-		})
-		.catch(err => {
-		    console.log(err);
-	    	    $(searchErrors).append("<p>Something went wrong with saving the article</p>");
-		});
+	let itemSaveButton = document.createElement("button");
+	itemSaveButton.innerText = "Save";
+	itemSaveButton.addEventListener("click", evt => {
+	    customAjaxPost(
+		"http://localhost:8080/sar-aux/article", 
+		{
+		    author: article.author,
+		    title: article.title,
+		    url: article.url,
+		    publicationTime: article.publishedAt,
+		    sourceName: article.source.name
+		}
+	    ).then(res => {
+		console.log(res);
+		searchResults.removeChild(evt.target.parentElement);
+	    })
+	    .catch(err => {
+		console.log(err);
+		$(searchErrors).append("<p>Something went wrong with saving the article</p>");
 	    });
-
-    	    item.appendChild(itemTitle);
-	    item.appendChild(itemAuthorSource);
-	    item.appendChild(itemReadLink);
-	    item.appendChild(itemSaveButton);
-	    searchResults.appendChild(item);
 	});
-    }
+
+	item.appendChild(itemTitle);
+	item.appendChild(itemAuthorSource);
+	item.appendChild(itemReadLink);
+	item.appendChild(itemSaveButton);
+	searchResults.appendChild(item);
+    });
+}

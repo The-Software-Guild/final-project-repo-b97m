@@ -1,7 +1,6 @@
-let subjectArticle = null;
-let subjectReview = null;
-
 window.addEventListener("load", () => {
+    let subjectArticle = null;
+    let subjectReview = null;
     let savedArticles = document.querySelector("#saved-articles");
 
     let deleteConfirm = document.querySelector("#delete-confirm");

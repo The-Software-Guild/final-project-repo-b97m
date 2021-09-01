@@ -28,7 +28,6 @@ input, textarea, button, select {
 }
 
 nav {
-    /* border: 1px solid var(--monochrome-4); */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-content: center;
