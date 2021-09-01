@@ -1,4 +1,4 @@
 /NewsViewer/target/
 /SAR/target/
-*NewsApiController.java
 /SAR/nbproject/
+news_api_key.txt
